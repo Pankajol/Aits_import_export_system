@@ -1,0 +1,43 @@
+
+
+
+datasource db {
+ 
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+
+
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+
+model Item {
+  id                    Int      @id @default(autoincrement())
+  itemCode              String   @unique
+  itemName              String
+  itemGroup             String
+  unitMeasurement       String
+  valuationMethod       String   @default("FIFO")
+  sellingPrice          Float
+  purchasePrice         Float
+  barcodes              String?
+  maintainStock         Boolean  @default(false)
+  brand                 String?
+  minimumOrderQty       Int?
+  shelfLife             Int?
+  safetyStock           Int?
+  warrantyPeriod        Int?
+  leadTime              Int?
+  endOfLife             DateTime?
+  qualityInspection     Boolean  @default(false)
+  materialRequestType   String?
+  status                String   @default("active")
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
