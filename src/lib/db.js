@@ -30,3 +30,31 @@ async function dbConnect() {
 }
 
 export default dbConnect;
+// import mongoose from 'mongoose';
+
+// const connectDb = async () => {
+//   if (mongoose.connections[0].readyState) {
+//     console.log('Already connected to MongoDB');
+//     return;
+//   }
+
+//   try {
+//     await mongoose.connect(process.env.MONGO_URI, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log('MongoDB Connected');
+//   } catch (error) {
+//     console.error('Database Connection Error:', error.message);
+
+//     // Provide additional information
+//     if (error.name === 'MongoServerError') {
+//       console.error('Ensure that your MongoDB URI, username, and password are correct.');
+//     }
+
+//     throw new Error('Database connection failed');
+//   }
+// };
+
+// export default connectDb;
+

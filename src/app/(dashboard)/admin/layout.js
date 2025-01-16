@@ -539,15 +539,40 @@ export default function AdminSidebar({ children }) {
             </button>
             {openMenu === "transaction" && (
               <div className="ml-4 mt-2 space-y-1">
+                 <Link href="/admin/sales-quotation" className="block px-4 py-2 hover:bg-gray-700">
+                  Sales-Quotation
+                </Link>
                 <Link href="/admin/sales-order" className="block px-4 py-2 hover:bg-gray-700">
                   Sales Order
                 </Link>
                 <Link href="/admin/delivery" className="block px-4 py-2 hover:bg-gray-700">
                   Delivery
                 </Link>
-                <Link href="/admin/PurchaseInvoiceForm" className="block px-4 py-2 hover:bg-gray-700">
+                <Link href="/admin/AR-Invoice" className="block px-4 py-2 hover:bg-gray-700">
                   Invoice
                 </Link>
+                <Link href="/admin/credit-memo" className="block px-4 py-2 hover:bg-gray-700">
+                  Credit Memo
+                </Link>
+                <Link href="/admin/debit-note" className="block px-4 py-2 hover:bg-gray-700">
+                  Debits Note
+                </Link>
+                <Link href="/admin/Payment" className="block px-4 py-2 hover:bg-gray-700">
+                  Payment
+                </Link>
+                <Link href="/admin/GRN" className="block px-4 py-2 hover:bg-gray-700">
+                  GRN
+                </Link>
+                <Link href="/admin/purchase-invoice" className="block px-4 py-2 hover:bg-gray-700">
+                  Purchase Invoice
+                </Link>
+                <Link href="/admin/purchase-order" className="block px-4 py-2 hover:bg-gray-700">
+                  Purchase Order
+                </Link>
+                <Link href="/admin/purchase-quotation" className="block px-4 py-2 hover:bg-gray-700">
+                  Purchase Quotation
+                </Link>
+                
               </div>
             )}
           </div>

@@ -221,8 +221,6 @@ export default function CreateAccount() {
               />
               <span className="text-gray-700 text-sm">
                 I agree to Import Export Terms of Service,Privacy Policy & Cookie Policy.
-                
-                .
               </span>
             </label>
             {errors.agreeToTerms && (
