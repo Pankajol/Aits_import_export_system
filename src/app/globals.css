@@ -35,3 +35,14 @@ body {
 .btn-secondary {
   @apply bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition shadow-md;
 }
+/* Hide spinner controls in Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spinner controls in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

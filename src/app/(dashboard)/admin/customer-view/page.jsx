@@ -1,7 +1,10 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import CustomerManagement from "@/components/sampleofcurd"
+
 import Table from "../../../../components/table"; // Import the Table component
 
 function ViewUser() {
@@ -13,7 +16,7 @@ function ViewUser() {
     const fetchCustomer = async () => {
       try {
         const response = await axios.get("/api/customers");
-        setCustomer(response.data.customers || []); // Assuming the response contains `accounts`
+        setCustomer(response.data || []); // Assuming the response contains `accounts`
       } catch (err) {
         console.error("Error fetching users:", err);
         setError("Unable to fetch users. Please try again.");
@@ -35,9 +38,19 @@ function ViewUser() {
         {loading ? (
           <p className="text-gray-600">Loading users...</p>
         ) : (
-          <Table data={customer} />
+          // <
+            
+           
+          
+          // />
+           <CustomerManagement/>
+         
+
+      
+        
         )}
       </div>
+      {/* < Table data={customer}/> */}
     </div>
 
     // </div>

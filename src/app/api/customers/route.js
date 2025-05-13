@@ -1,84 +1,54 @@
-import { NextResponse } from 'next/server';
-import connectDb from '../../../lib/db';
-import Customer from './schema';// Customer model
+import dbConnect from "@/lib/db.js";
+import Customer from "@/models/CustomerModel";
+import { NextResponse } from "next/server";
 
-// Validation function to check if the form data is correct
-const validateCustomerData = (data) => {
-  const errors = {};
 
-  // Required fields
-  if (!data.customerCode) errors.customerCode = 'Customer Code is required';
-  if (!data.customerName) errors.customerName = 'Customer Name is required';
-  if (!data.emailId) errors.emailId = 'Email is required';
-  if (!data.mobileNumber) errors.mobileNumber = 'Mobile Number is required';
 
-  // Validate email format
-  if (data.emailId && !/\S+@\S+\.\S+/.test(data.emailId)) {
-    errors.emailId = 'Email is not valid';
-  }
 
-  // Validate mobile number (simple check, update as needed)
-  if (data.mobileNumber && !/^\d{10}$/.test(data.mobileNumber)) {
-    errors.mobileNumber = 'Mobile Number must be 10 digits';
-  }
-
-  return errors;
-};
-
-export async function POST(request) {
+export async function POST(req) {
+  await dbConnect();
   try {
-    await connectDb(); // Connect to database
+    const data = await req.json();
+    console.log("Received customer data:", data);
 
-    // Parse the form data from the request body
-    const formData = await request.json();
-
-    // Validate the form data
-    const validationErrors = validateCustomerData(formData);
-
-    // If there are validation errors, return them
-    if (Object.keys(validationErrors).length > 0) {
+    // Validate required fields
+    if (!data.customerCode || !data.customerName || !data.emailId) {
       return NextResponse.json(
-        { message: 'Validation failed', errors: validationErrors },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    // If no validation errors, create the customer object
-    const newCustomer = new Customer(formData);
-
-    // Save the new customer to the database
-    await newCustomer.save();
-
-    // Respond with success message and customer data
-    return NextResponse.json(
-      { message: 'Customer created successfully', customer: newCustomer },
-      { status: 201 }
-    );
+    const customer = await Customer.create(data);
+    return NextResponse.json(customer, { status: 201 });
   } catch (error) {
-    console.error('Error creating customer:', error);
-
-    // Return error if something goes wrong
+    console.error("Error creating customer:", error);
     return NextResponse.json(
-      { message: 'Failed to create customer', error: error.message },
-      { status: 500 }
+      { error: error.message || "Error creating customer" },
+      { status: 400 }
     );
   }
 }
+
 
 export async function GET() {
+  await dbConnect();
   try {
-    await connectDb(); // Connect to database
-
-    // Fetch all customers from the database
-    const customers = await Customer.find();
-
-    // Return the list of customers
-    return NextResponse.json({ customers }, { status: 200 });
+    const customers = await Customer.find({});
+    return NextResponse.json(customers, { status: 200 });
   } catch (error) {
-    console.error('Error fetching customers:', error);
-    return NextResponse.json(
-      { message: 'Failed to fetch customers', error: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Error fetching customers" }, { status: 400 });
   }
 }
+
+// export async function POST(req) {
+//   await dbConnect();
+//   try {
+//     const data = await req.json();
+//     console.log('Received customer data:', data);
+//     const customer = await Customer.create(data);
+//     return NextResponse.json(customer, { status: 201 });
+//   } catch (error) {
+//     return NextResponse.json({ error: "Error creating customer" }, { status: 400 });
+//   }
+// }
